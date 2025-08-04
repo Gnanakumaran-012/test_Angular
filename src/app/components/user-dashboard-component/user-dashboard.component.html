@@ -1,0 +1,173 @@
+<div class="dashboard-container" *ngIf="!loading">
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <h1>Welcome back, {{ currentUser?.firstName || currentUser?.username }}!</h1>
+    <p>Here's what's happening with your auctions and bids</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>gavel</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.totalBids }}</div>
+          <div class="stat-label">Total Bids</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>emoji_events</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.wonAuctions }}</div>
+          <div class="stat-label">Won Auctions</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.activeBids }}</div>
+          <div class="stat-label">Active Bids</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>attach_money</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">${{ stats.totalSpent | number:'1.0-0' }}</div>
+          <div class="stat-label">Total Spent</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>favorite</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.watchlistCount }}</div>
+          <div class="stat-label">Watchlist Items</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>store</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.favoriteSellers }}</div>
+          <div class="stat-label">Favorite Sellers</div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Performance Metrics -->
+  <div class="metrics-section">
+    <mat-card class="metrics-card">
+      <h3>Bidding Performance</h3>
+      <div class="metric-item">
+        <div class="metric-label">Success Rate</div>
+        <div class="metric-value">{{ getBidSuccessRate() | number:'1.0-1' }}%</div>
+        <mat-progress-bar 
+          [value]="getBidSuccessRate()" 
+          [color]="getBidSuccessRate() >= 50 ? 'accent' : 'primary'">
+        </mat-progress-bar>
+      </div>
+      <div class="metric-item">
+        <div class="metric-label">Average Bid Amount</div>
+        <div class="metric-value">${{ getAverageBidAmount() | number:'1.0-2' }}</div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Watched Auctions Section -->
+  <section class="dashboard-section" *ngIf="watchedAuctions.length > 0">
+    <div class="section-header">
+      <h2>Watched Auctions</h2>
+      <button mat-button color="primary" (click)="viewAllWatched()">
+        View All
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    
+    <div class="auctions-grid">
+      <app-auction 
+        *ngFor="let auction of watchedAuctions.slice(0, 4)"
+        [auction]="auction"
+        (bidPlaced)="onBidPlaced($event)"
+        (watchToggled)="onWatchToggled($event)">
+      </app-auction>
+    </div>
+  </section>
+
+  <!-- Recommended Products Section -->
+  <section class="dashboard-section" *ngIf="recommendedProducts.length > 0">
+    <div class="section-header">
+      <h2>Recommended for You</h2>
+      <button mat-button color="primary" (click)="viewAllProducts()">
+        View All
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    
+    <div class="products-grid">
+      <app-product 
+        *ngFor="let product of recommendedProducts"
+        [product]="product"
+        (productSelected)="onProductSelected($event)"
+        (addToCart)="onAddToCart($event)">
+      </app-product>
+    </div>
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="dashboard-section">
+    <h2>Quick Actions</h2>
+    <div class="quick-actions">
+      <button mat-raised-button color="primary" routerLink="/auctions">
+        <mat-icon>gavel</mat-icon>
+        Browse Auctions
+      </button>
+      
+      <button mat-raised-button color="accent" routerLink="/products">
+        <mat-icon>inventory</mat-icon>
+        Shop Products
+      </button>
+      
+      <button mat-raised-button color="warn" routerLink="/bids">
+        <mat-icon>history</mat-icon>
+        View Bid History
+      </button>
+      
+      <button mat-raised-button routerLink="/profile">
+        <mat-icon>person</mat-icon>
+        Edit Profile
+      </button>
+    </div>
+  </section>
+</div>
+
+<!-- Loading State -->
+<div class="loading-spinner" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <p>Loading your dashboard...</p>
+</div>

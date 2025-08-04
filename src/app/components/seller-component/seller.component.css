@@ -1,0 +1,154 @@
+.seller-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.seller-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.seller-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 20px 0 20px;
+}
+
+.seller-avatar {
+  flex-shrink: 0;
+}
+
+.seller-avatar mat-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #1976d2;
+}
+
+.seller-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.seller-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+.seller-username {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 8px 0;
+}
+
+.seller-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.stars mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.rating-text {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.seller-badge {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.seller-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 20px 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.stat-item:hover {
+  background: #e9ecef;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.action-buttons button {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+mat-card-actions {
+  padding: 16px;
+  margin: 0;
+}
+
+mat-divider {
+  margin: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .seller-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .seller-avatar {
+    align-self: center;
+  }
+  
+  .seller-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .action-buttons {
+    gap: 6px;
+  }
+  
+  .action-buttons button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,67 @@
+<mat-card class="product-card" (click)="onProductClick()">
+  <div class="product-image">
+    <img [src]="product.images[0] || 'assets/images/product-placeholder.jpg'" [alt]="product.name">
+    <div class="product-overlay">
+      <mat-chip [color]="getConditionColor()" selected class="condition-chip">
+        {{ getConditionText() }}
+      </mat-chip>
+      <mat-chip [color]="getStockColor()" selected class="stock-chip">
+        {{ getStockStatus() }}
+      </mat-chip>
+    </div>
+    <div class="stock-badge" *ngIf="product.stockQuantity <= 5 && product.stockQuantity > 0">
+      <mat-icon>warning</mat-icon>
+      Only {{ product.stockQuantity }} left
+    </div>
+  </div>
+
+  <mat-card-content>
+    <h3 class="product-title">{{ product.name }}</h3>
+    <p class="product-description">{{ product.description | slice:0:80 }}{{ product.description.length > 80 ? '...' : '' }}</p>
+    
+    <div class="product-details">
+      <div class="price-info">
+        <span class="price">${{ product.price | number:'1.0-2' }}</span>
+        <span class="stock-quantity" *ngIf="product.stockQuantity > 0">
+          {{ product.stockQuantity }} in stock
+        </span>
+      </div>
+      
+      <div class="seller-info">
+        <mat-icon>store</mat-icon>
+        <span>{{ product.sellerName }}</span>
+      </div>
+      
+      <div class="category-info">
+        <mat-icon>category</mat-icon>
+        <span>{{ product.categoryName }}</span>
+      </div>
+      
+      <div class="brand-info" *ngIf="product.brand">
+        <mat-icon>branding_watermark</mat-icon>
+        <span>{{ product.brand }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="showActions">
+    <div class="action-buttons">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        class="add-to-cart-button"
+        [disabled]="!isInStock()"
+        (click)="onAddToCart($event)">
+        <mat-icon>shopping_cart</mat-icon>
+        {{ isInStock() ? 'Add to Cart' : 'Out of Stock' }}
+      </button>
+      
+      <button 
+        mat-icon-button 
+        (click)="onProductClick(); $event.stopPropagation()"
+        matTooltip="View details">
+        <mat-icon>visibility</mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

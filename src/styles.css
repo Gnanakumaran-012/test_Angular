@@ -1,0 +1,79 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Custom Material Design Overrides */
+.mat-mdc-card {
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.mat-mdc-button {
+  border-radius: 4px !important;
+}
+
+/* Auction specific styles */
+.auction-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.auction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.bid-button {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24) !important;
+  color: white !important;
+}
+
+.bid-button:hover {
+  background: linear-gradient(45deg, #ee5a24, #ff6b6b) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Toast notifications */
+.toast-success {
+  background-color: #4caf50 !important;
+}
+
+.toast-error {
+  background-color: #f44336 !important;
+}
+
+.toast-warning {
+  background-color: #ff9800 !important;
+}
+
+.toast-info {
+  background-color: #2196f3 !important;
+}

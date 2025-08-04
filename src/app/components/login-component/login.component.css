@@ -1,0 +1,167 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #1976d2;
+  margin-bottom: 16px;
+}
+
+.login-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.login-header p {
+  color: #666;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.forgot-password {
+  color: #1976d2;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-button {
+  height: 48px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.divider {
+  margin: 24px 0;
+}
+
+.divider-text {
+  background: white;
+  padding: 0 16px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.social-button {
+  height: 48px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.social-button.google {
+  border-color: #db4437;
+  color: #db4437;
+}
+
+.social-button.google:hover {
+  background-color: #db4437;
+  color: white;
+}
+
+.social-button.facebook {
+  border-color: #4267B2;
+  color: #4267B2;
+}
+
+.social-button.facebook:hover {
+  background-color: #4267B2;
+  color: white;
+}
+
+.register-link {
+  text-align: center;
+}
+
+.register-link p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.register-link a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 10px;
+  }
+  
+  .login-card {
+    padding: 24px;
+  }
+  
+  .login-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .form-options {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}

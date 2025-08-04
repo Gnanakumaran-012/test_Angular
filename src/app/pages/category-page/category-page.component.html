@@ -1,0 +1,92 @@
+<div class="category-page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-text">
+        <h1>Categories</h1>
+        <p>Browse auctions and products by category</p>
+      </div>
+      <button 
+        *ngIf="selectedCategoryId"
+        mat-stroked-button 
+        color="primary"
+        (click)="goBackToMainCategories()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Main Categories
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <mat-card class="search-card">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search categories</mat-label>
+        <input 
+          matInput 
+          formControlName="searchTerm" 
+          placeholder="Search by name or description...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+      
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit">
+        <mat-icon>search</mat-icon>
+        Search
+      </button>
+    </form>
+  </mat-card>
+
+  <!-- Categories Section -->
+  <div class="categories-section">
+    <div class="section-header">
+      <h2>{{ totalCategories }} categories found</h2>
+      <div class="view-options">
+        <button mat-icon-button matTooltip="Grid view">
+          <mat-icon>grid_view</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="List view">
+          <mat-icon>view_list</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-spinner" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+      <p>Loading categories...</p>
+    </div>
+
+    <!-- Categories Grid -->
+    <div class="categories-grid" *ngIf="!loading && getFilteredCategories().length > 0">
+      <app-category 
+        *ngFor="let category of getFilteredCategories()"
+        [category]="category"
+        (categorySelected)="onCategorySelected($event)">
+      </app-category>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!loading && getFilteredCategories().length === 0">
+      <mat-icon>category</mat-icon>
+      <h3>No categories found</h3>
+      <p>Try adjusting your search or check back later for new categories.</p>
+      <button mat-raised-button color="primary" (click)="onSearch()">
+        Clear Search
+      </button>
+    </div>
+
+    <!-- Pagination -->
+    <mat-paginator 
+      *ngIf="!loading && totalCategories > pageSize"
+      [length]="totalCategories"
+      [pageSize]="pageSize"
+      [pageIndex]="currentPage"
+      [pageSizeOptions]="[6, 12, 24, 48]"
+      (page)="onPageChange($event)"
+      class="pagination">
+    </mat-paginator>
+  </div>
+</div>

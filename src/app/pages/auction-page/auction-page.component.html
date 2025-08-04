@@ -1,0 +1,138 @@
+<div class="auction-page-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>Auctions</h1>
+    <p>Discover unique items and place your bids</p>
+  </div>
+
+  <!-- Filters Section -->
+  <mat-card class="filters-card">
+    <form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()" class="filters-form">
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search auctions</mat-label>
+          <input 
+            matInput 
+            formControlName="searchTerm" 
+            placeholder="Search by title, description...">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="category-field">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="categoryId">
+            <mat-option value="">All Categories</mat-option>
+            <mat-option 
+              *ngFor="let category of categories" 
+              [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="status-field">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option 
+              *ngFor="let option of getStatusOptions()" 
+              [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="price-field">
+          <mat-label>Min Price</mat-label>
+          <input 
+            matInput 
+            type="number" 
+            formControlName="minPrice" 
+            placeholder="0">
+          <mat-icon matSuffix>attach_money</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="price-field">
+          <mat-label>Max Price</mat-label>
+          <input 
+            matInput 
+            type="number" 
+            formControlName="maxPrice" 
+            placeholder="1000">
+          <mat-icon matSuffix>attach_money</mat-icon>
+        </mat-form-field>
+
+        <div class="filter-actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit">
+            <mat-icon>filter_list</mat-icon>
+            Apply Filters
+          </button>
+          
+          <button 
+            mat-stroked-button 
+            type="button"
+            (click)="clearFilters()">
+            <mat-icon>clear</mat-icon>
+            Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+
+  <!-- Results Section -->
+  <div class="results-section">
+    <div class="results-header">
+      <h2>{{ totalAuctions }} auctions found</h2>
+      <div class="view-options">
+        <button mat-icon-button matTooltip="Grid view">
+          <mat-icon>grid_view</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="List view">
+          <mat-icon>view_list</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-spinner" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+      <p>Loading auctions...</p>
+    </div>
+
+    <!-- Auctions Grid -->
+    <div class="auctions-grid" *ngIf="!loading && getFilteredAuctions().length > 0">
+      <app-auction 
+        *ngFor="let auction of getFilteredAuctions()"
+        [auction]="auction"
+        (bidPlaced)="onBidPlaced($event)"
+        (watchToggled)="onWatchToggled($event)">
+      </app-auction>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!loading && getFilteredAuctions().length === 0">
+      <mat-icon>gavel</mat-icon>
+      <h3>No auctions found</h3>
+      <p>Try adjusting your filters or check back later for new auctions.</p>
+      <button mat-raised-button color="primary" (click)="clearFilters()">
+        Clear Filters
+      </button>
+    </div>
+
+    <!-- Pagination -->
+    <mat-paginator 
+      *ngIf="!loading && totalAuctions > pageSize"
+      [length]="totalAuctions"
+      [pageSize]="pageSize"
+      [pageIndex]="currentPage"
+      [pageSizeOptions]="[6, 12, 24, 48]"
+      (page)="onPageChange($event)"
+      class="pagination">
+    </mat-paginator>
+  </div>
+</div>

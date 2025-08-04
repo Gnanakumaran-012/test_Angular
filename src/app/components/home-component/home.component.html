@@ -1,0 +1,128 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Welcome to Auction Management System</h1>
+    <p class="hero-subtitle">Discover unique items, place bids, and win amazing auctions. Join thousands of users in the ultimate bidding experience.</p>
+    <div class="hero-actions">
+      <button mat-raised-button color="primary" class="cta-button" (click)="getStarted()">
+        <mat-icon>gavel</mat-icon>
+        Get Started
+      </button>
+      <button mat-stroked-button color="primary" (click)="viewAllAuctions()">
+        <mat-icon>visibility</mat-icon>
+        Browse Auctions
+      </button>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="assets/images/hero-auction.jpg" alt="Auction Hero">
+  </div>
+</section>
+
+<!-- Featured Auctions Section -->
+<section class="featured-section" *ngIf="!loading">
+  <div class="section-header">
+    <h2>Featured Auctions</h2>
+    <button mat-button color="primary" (click)="viewAllAuctions()">
+      View All
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  
+  <div class="auctions-grid" *ngIf="featuredAuctions.length > 0; else noFeaturedAuctions">
+    <app-auction 
+      *ngFor="let auction of featuredAuctions.slice(0, 6)"
+      [auction]="auction"
+      (bidPlaced)="onBidPlaced($event)"
+      (watchToggled)="onWatchToggled($event)">
+    </app-auction>
+  </div>
+  
+  <ng-template #noFeaturedAuctions>
+    <div class="empty-state">
+      <mat-icon>gavel</mat-icon>
+      <p>No featured auctions available at the moment.</p>
+    </div>
+  </ng-template>
+</section>
+
+<!-- Ending Soon Section -->
+<section class="ending-soon-section" *ngIf="!loading && endingSoonAuctions.length > 0">
+  <div class="section-header">
+    <h2>Ending Soon</h2>
+    <button mat-button color="warn" (click)="viewAllAuctions()">
+      View All
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  
+  <div class="auctions-grid">
+    <app-auction 
+      *ngFor="let auction of endingSoonAuctions.slice(0, 4)"
+      [auction]="auction"
+      (bidPlaced)="onBidPlaced($event)"
+      (watchToggled)="onWatchToggled($event)">
+    </app-auction>
+  </div>
+</section>
+
+<!-- Popular Categories Section -->
+<section class="categories-section" *ngIf="!loading">
+  <div class="section-header">
+    <h2>Popular Categories</h2>
+    <button mat-button color="primary" (click)="viewAllCategories()">
+      View All
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  
+  <div class="categories-grid" *ngIf="popularCategories.length > 0; else noCategories">
+    <app-category 
+      *ngFor="let category of popularCategories.slice(0, 6)"
+      [category]="category"
+      (categorySelected)="onCategorySelected($event)">
+    </app-category>
+  </div>
+  
+  <ng-template #noCategories>
+    <div class="empty-state">
+      <mat-icon>category</mat-icon>
+      <p>No categories available at the moment.</p>
+    </div>
+  </ng-template>
+</section>
+
+<!-- Loading State -->
+<div class="loading-spinner" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <p>Loading amazing auctions...</p>
+</div>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="features-grid">
+    <div class="feature-card">
+      <mat-icon class="feature-icon">gavel</mat-icon>
+      <h3>Live Bidding</h3>
+      <p>Experience real-time bidding with instant updates and notifications.</p>
+    </div>
+    
+    <div class="feature-card">
+      <mat-icon class="feature-icon">security</mat-icon>
+      <h3>Secure Transactions</h3>
+      <p>Your bids and payments are protected with industry-standard security.</p>
+    </div>
+    
+    <div class="feature-card">
+      <mat-icon class="feature-icon">verified_user</mat-icon>
+      <h3>Verified Sellers</h3>
+      <p>All sellers are verified to ensure quality and authenticity.</p>
+    </div>
+    
+    <div class="feature-card">
+      <mat-icon class="feature-icon">support_agent</mat-icon>
+      <h3>24/7 Support</h3>
+      <p>Get help anytime with our dedicated customer support team.</p>
+    </div>
+  </div>
+</section>

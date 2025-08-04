@@ -1,0 +1,76 @@
+<mat-card class="seller-card" (click)="onSellerClick()">
+  <div class="seller-header">
+    <div class="seller-avatar">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+    <div class="seller-info">
+      <h3 class="seller-name">{{ seller.firstName }} {{ seller.lastName }}</h3>
+      <p class="seller-username">@{{ seller.username }}</p>
+      <div class="seller-rating" *ngIf="stats">
+        <div class="stars">
+          <mat-icon 
+            *ngFor="let star of getRatingStars(); let i = index"
+            [color]="getRatingColor()">
+            {{ star === 1 ? 'star' : 'star_border' }}
+          </mat-icon>
+        </div>
+        <span class="rating-text">{{ stats.rating | number:'1.1-1' }} ({{ stats.reviews }} reviews)</span>
+      </div>
+    </div>
+    <mat-chip color="primary" selected class="seller-badge" *ngIf="seller.role === 'seller'">
+      Verified Seller
+    </mat-chip>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <div class="seller-stats" *ngIf="stats">
+      <div class="stat-item">
+        <div class="stat-value">{{ stats.totalAuctions }}</div>
+        <div class="stat-label">Total Auctions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">{{ stats.activeAuctions }}</div>
+        <div class="stat-label">Active Auctions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">{{ stats.totalProducts }}</div>
+        <div class="stat-label">Products</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">${{ stats.totalSales | number:'1.0-0' }}</div>
+        <div class="stat-label">Total Sales</div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="showActions">
+    <div class="action-buttons">
+      <button 
+        mat-stroked-button 
+        color="primary"
+        (click)="onViewAuctions(); $event.stopPropagation()">
+        <mat-icon>gavel</mat-icon>
+        View Auctions
+      </button>
+      
+      <button 
+        mat-stroked-button 
+        color="accent"
+        (click)="onViewProducts(); $event.stopPropagation()">
+        <mat-icon>inventory</mat-icon>
+        View Products
+      </button>
+      
+      <button 
+        mat-raised-button 
+        color="primary"
+        *ngIf="!isCurrentUser()"
+        (click)="onContactSeller(); $event.stopPropagation()">
+        <mat-icon>message</mat-icon>
+        Contact
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>
