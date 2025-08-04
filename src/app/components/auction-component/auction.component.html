@@ -1,0 +1,76 @@
+<mat-card class="auction-card" [class.ended]="auction.status === 'ended'">
+  <div class="auction-image">
+    <img [src]="auction.images[0] || 'assets/images/placeholder.jpg'" [alt]="auction.title">
+    <div class="auction-overlay">
+      <mat-chip [color]="getStatusColor()" selected class="status-chip">
+        {{ getStatusText() }}
+      </mat-chip>
+      <div class="time-left" [class.urgent]="timeLeft.includes('s') || timeLeft.includes('m')">
+        <mat-icon>schedule</mat-icon>
+        {{ timeLeft }}
+      </div>
+    </div>
+  </div>
+
+  <mat-card-content>
+    <h3 class="auction-title" (click)="onViewDetails()">{{ auction.title }}</h3>
+    <p class="auction-description">{{ auction.description | slice:0:100 }}{{ auction.description.length > 100 ? '...' : '' }}</p>
+    
+    <div class="auction-details">
+      <div class="price-info">
+        <span class="current-price">${{ auction.currentPrice | number:'1.0-0' }}</span>
+        <span class="bid-count">{{ auction.totalBids }} bids</span>
+      </div>
+      
+      <div class="seller-info">
+        <mat-icon>person</mat-icon>
+        <span>{{ auction.sellerName }}</span>
+      </div>
+      
+      <div class="category-info">
+        <mat-icon>category</mat-icon>
+        <span>{{ auction.categoryName }}</span>
+      </div>
+    </div>
+
+    <div class="reserve-progress" *ngIf="auction.reservePrice">
+      <div class="progress-label">
+        <span>Reserve: ${{ auction.reservePrice | number:'1.0-0' }}</span>
+        <span>{{ getProgressPercentage() | number:'1.0-0' }}%</span>
+      </div>
+      <mat-progress-bar 
+        [value]="getProgressPercentage()" 
+        [color]="getProgressPercentage() >= 100 ? 'accent' : 'primary'">
+      </mat-progress-bar>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="showActions">
+    <div class="action-buttons">
+      <button 
+        mat-raised-button 
+        color="accent" 
+        class="bid-button"
+        [disabled]="auction.status !== 'active'"
+        (click)="onBidClick()">
+        <mat-icon>gavel</mat-icon>
+        Place Bid
+      </button>
+      
+      <button 
+        mat-icon-button 
+        [color]="isWatching ? 'accent' : 'default'"
+        (click)="onWatchClick()"
+        [matTooltip]="isWatching ? 'Remove from watchlist' : 'Add to watchlist'">
+        <mat-icon>{{ isWatching ? 'favorite' : 'favorite_border' }}</mat-icon>
+      </button>
+      
+      <button 
+        mat-icon-button 
+        (click)="onViewDetails()"
+        matTooltip="View details">
+        <mat-icon>visibility</mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

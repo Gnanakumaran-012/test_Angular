@@ -1,0 +1,191 @@
+<div class="seller-page-container" *ngIf="!loading">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-text">
+        <h1>Seller Portal</h1>
+        <p>Manage your auctions, products, and sales</p>
+      </div>
+      <div class="header-actions">
+        <button mat-raised-button color="primary" (click)="onCreateAuction()">
+          <mat-icon>add</mat-icon>
+          Create Auction
+        </button>
+        <button mat-raised-button color="accent" (click)="onCreateProduct()">
+          <mat-icon>add</mat-icon>
+          Add Product
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>gavel</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.totalAuctions }}</div>
+          <div class="stat-label">Total Auctions</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.activeAuctions }}</div>
+          <div class="stat-label">Active Auctions</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>attach_money</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">${{ stats.totalRevenue | number:'1.0-0' }}</div>
+          <div class="stat-label">Total Revenue</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>inventory</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.totalProducts }}</div>
+          <div class="stat-label">Products</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>shopping_cart</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.totalSales }}</div>
+          <div class="stat-label">Total Sales</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon">
+          <mat-icon>star</mat-icon>
+        </div>
+        <div class="stat-info">
+          <div class="stat-value">{{ stats.averageRating | number:'1.1-1' }}</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions-section">
+    <h2>Quick Actions</h2>
+    <div class="quick-actions">
+      <button mat-raised-button color="primary" (click)="onViewAnalytics()">
+        <mat-icon>analytics</mat-icon>
+        View Analytics
+      </button>
+      
+      <button mat-raised-button color="accent" (click)="onManageInventory()">
+        <mat-icon>inventory_2</mat-icon>
+        Manage Inventory
+      </button>
+      
+      <button mat-raised-button color="warn" (click)="onViewOrders()">
+        <mat-icon>receipt</mat-icon>
+        View Orders
+      </button>
+      
+      <button mat-raised-button routerLink="/seller/settings">
+        <mat-icon>settings</mat-icon>
+        Settings
+      </button>
+    </div>
+  </div>
+
+  <!-- Content Tabs -->
+  <mat-tab-group class="content-tabs">
+    <mat-tab label="My Auctions">
+      <div class="tab-content">
+        <div class="section-header">
+          <h3>My Auctions</h3>
+          <button mat-raised-button color="primary" (click)="onCreateAuction()">
+            <mat-icon>add</mat-icon>
+            Create New Auction
+          </button>
+        </div>
+        
+        <div class="auctions-grid" *ngIf="myAuctions.length > 0">
+          <app-auction 
+            *ngFor="let auction of getFilteredAuctions()"
+            [auction]="auction"
+            (bidPlaced)="onBidPlaced($event)"
+            (watchToggled)="onWatchToggled($event)">
+          </app-auction>
+        </div>
+        
+        <div class="empty-state" *ngIf="myAuctions.length === 0">
+          <mat-icon>gavel</mat-icon>
+          <h3>No auctions yet</h3>
+          <p>Start selling by creating your first auction.</p>
+          <button mat-raised-button color="primary" (click)="onCreateAuction()">
+            Create Auction
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="My Products">
+      <div class="tab-content">
+        <div class="section-header">
+          <h3>My Products</h3>
+          <button mat-raised-button color="primary" (click)="onCreateProduct()">
+            <mat-icon>add</mat-icon>
+            Add New Product
+          </button>
+        </div>
+        
+        <div class="products-grid" *ngIf="myProducts.length > 0">
+          <app-product 
+            *ngFor="let product of getFilteredProducts()"
+            [product]="product"
+            (productSelected)="onProductSelected($event)"
+            (addToCart)="onAddToCart($event)">
+          </app-product>
+        </div>
+        
+        <div class="empty-state" *ngIf="myProducts.length === 0">
+          <mat-icon>inventory</mat-icon>
+          <h3>No products yet</h3>
+          <p>Start selling by adding your first product.</p>
+          <button mat-raised-button color="primary" (click)="onCreateProduct()">
+            Add Product
+          </button>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<!-- Loading State -->
+<div class="loading-spinner" *ngIf="loading">
+  <mat-spinner></mat-spinner>
+  <p>Loading seller portal...</p>
+</div>

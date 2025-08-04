@@ -1,0 +1,95 @@
+<mat-toolbar color="primary" class="toolbar">
+  <div class="toolbar-content">
+    <div class="toolbar-left">
+      <mat-icon class="toolbar-icon">gavel</mat-icon>
+      <span class="toolbar-title">{{ title }}</span>
+    </div>
+    
+    <div class="toolbar-right">
+      <ng-container *ngIf="!authService.isAuthenticated(); else authenticatedUser">
+        <button mat-button routerLink="/login">
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+        <button mat-button routerLink="/register">
+          <mat-icon>person_add</mat-icon>
+          Register
+        </button>
+      </ng-container>
+      
+      <ng-template #authenticatedUser>
+        <button mat-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+          {{ authService.getCurrentUser()?.username || 'User' }}
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item routerLink="/dashboard">
+            <mat-icon>dashboard</mat-icon>
+            Dashboard
+          </button>
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            Profile
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </mat-menu>
+        
+        <button mat-icon-button routerLink="/notifications" class="notification-btn">
+          <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</mat-toolbar>
+
+<nav class="navbar">
+  <div class="container">
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <mat-icon>home</mat-icon>
+          Home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/auctions" routerLinkActive="active">
+          <mat-icon>gavel</mat-icon>
+          Auctions
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/categories" routerLinkActive="active">
+          <mat-icon>category</mat-icon>
+          Categories
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/products" routerLinkActive="active">
+          <mat-icon>inventory</mat-icon>
+          Products
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="authService.isAuthenticated()">
+        <a routerLink="/seller" routerLinkActive="active">
+          <mat-icon>store</mat-icon>
+          Seller Portal
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main class="main-content">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2024 Auction Management System. All rights reserved.</p>
+  </div>
+</footer>

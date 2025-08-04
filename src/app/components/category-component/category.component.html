@@ -1,0 +1,46 @@
+<mat-card class="category-card" (click)="onCategoryClick()">
+  <div class="category-image">
+    <img [src]="category.imageUrl || 'assets/images/category-placeholder.jpg'" [alt]="category.name">
+    <div class="category-overlay">
+      <mat-chip color="primary" selected class="auction-count-chip" *ngIf="category.auctionCount">
+        {{ category.auctionCount }} auctions
+      </mat-chip>
+    </div>
+  </div>
+
+  <mat-card-content>
+    <h3 class="category-title">{{ category.name }}</h3>
+    <p class="category-description">{{ category.description }}</p>
+    
+    <div class="subcategories" *ngIf="category.subcategories && category.subcategories.length > 0">
+      <div class="subcategory-list">
+        <span class="subcategory-item" *ngFor="let sub of category.subcategories.slice(0, 3)">
+          {{ sub.name }}
+        </span>
+        <span class="more-subcategories" *ngIf="category.subcategories.length > 3">
+          +{{ category.subcategories.length - 3 }} more
+        </span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="showActions">
+    <div class="action-buttons">
+      <button 
+        mat-stroked-button 
+        color="primary"
+        (click)="onViewAuctions(); $event.stopPropagation()">
+        <mat-icon>gavel</mat-icon>
+        View Auctions
+      </button>
+      
+      <button 
+        mat-stroked-button 
+        color="accent"
+        (click)="onViewProducts(); $event.stopPropagation()">
+        <mat-icon>inventory</mat-icon>
+        View Products
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

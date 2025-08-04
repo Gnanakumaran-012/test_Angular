@@ -1,0 +1,94 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <div class="login-header">
+      <mat-icon class="login-icon">gavel</mat-icon>
+      <h1>Welcome Back</h1>
+      <p>Sign in to your account to continue bidding</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <input 
+          matInput 
+          formControlName="username" 
+          placeholder="Enter your username"
+          autocomplete="username">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+          Username is required
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('username')?.hasError('minlength')">
+          Username must be at least 3 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input 
+          matInput 
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password" 
+          placeholder="Enter your password"
+          autocomplete="current-password">
+        <button 
+          mat-icon-button 
+          matSuffix 
+          (click)="hidePassword = !hidePassword" 
+          [attr.aria-label]="'Hide password'" 
+          [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-options">
+        <mat-checkbox formControlName="rememberMe" color="primary">
+          Remember me
+        </mat-checkbox>
+        <a href="#" (click)="onForgotPassword(); $event.preventDefault()" class="forgot-password">
+          Forgot password?
+        </a>
+      </div>
+
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        class="login-button"
+        [disabled]="loading || !loginForm.valid">
+        <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+        <span *ngIf="!loading">Sign In</span>
+      </button>
+    </form>
+
+    <mat-divider class="divider">
+      <span class="divider-text">or</span>
+    </mat-divider>
+
+    <div class="social-login">
+      <button mat-stroked-button class="social-button google">
+        <mat-icon>google</mat-icon>
+        Continue with Google
+      </button>
+      
+      <button mat-stroked-button class="social-button facebook">
+        <mat-icon>facebook</mat-icon>
+        Continue with Facebook
+      </button>
+    </div>
+
+    <div class="register-link">
+      <p>Don't have an account? 
+        <a href="#" (click)="onRegisterClick(); $event.preventDefault()">
+          Sign up here
+        </a>
+      </p>
+    </div>
+  </mat-card>
+</div>

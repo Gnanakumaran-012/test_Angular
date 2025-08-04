@@ -1,0 +1,171 @@
+.category-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 40px;
+  padding: 40px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 16px;
+  margin: -20px -15px 40px -15px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.header-text h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.header-text p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.search-card {
+  margin-bottom: 40px;
+  border-radius: 12px;
+}
+
+.search-form {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 24px;
+}
+
+.search-field {
+  flex: 1;
+}
+
+.search-form button {
+  height: 56px;
+  padding: 0 24px;
+}
+
+.categories-section {
+  margin-bottom: 40px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.view-options {
+  display: flex;
+  gap: 8px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.loading-spinner p {
+  margin-top: 16px;
+  font-size: 1.1rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.empty-state mat-icon {
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 12px 0;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  margin: 0 0 24px 0;
+  color: #666;
+}
+
+.pagination {
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 30px 20px;
+    margin: -20px -15px 30px -15px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .header-text h1 {
+    font-size: 2rem;
+  }
+  
+  .header-text p {
+    font-size: 1rem;
+  }
+  
+  .search-form {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .search-form button {
+    width: 100%;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
